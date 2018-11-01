@@ -172,6 +172,13 @@ class MgmtsystemNonconformity(models.Model):
                       "in order to put a nonconformity In Progress."))
 
     @api.constrains('stage_id')
+    def _check_pending_with_action_ids(self):
+        for nc in self:
+            if nc.state == 'pending' and len(nc.action_ids) == 0:
+                raise models.ValidationError(
+                    _("you can not continue without writing an action plan."))
+
+    @api.constrains('stage_id')
     def _check_close_with_evaluation(self):
         for nc in self:
             if nc.state == 'done':
