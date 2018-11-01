@@ -174,14 +174,14 @@
                 <separator string="Analysis Confirmation"/>
                 <group>
                   <group>
-                    <field name="severity_id" attrs="{'readonly':[('state','not in',['analysis'])]}"/>
+                    <field name="severity_id" attrs="{'readonly':[('state','not in',['analysis'])],'required':[('state','in',['analysis','pending'])]}"/>
                   </group>
                 </group>
               </page>
 
               <page string="Actions" attrs="{'invisible':[('state','in',['draft','analysis','cancel'])]}">
                 <separator string="Action Plan"/>
-                <field name="action_ids" attrs="{'readonly':[('state','not in',['pending'])]}"/>
+                <field name="action_ids" attrs="{'readonly':[('state','not in',['pending'])], 'required':[('state','in',['pending'])]}"/>
 
                 <group string="Plan Review">
                  <group>

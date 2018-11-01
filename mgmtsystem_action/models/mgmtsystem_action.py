@@ -12,8 +12,8 @@ class MgmtsystemAction(models.Model):
     def _default_company(self):
         return self.env.user.company_id
 
-    def _default_owner(self):
-        return self.env.user
+    # def _default_owner(self):
+    #     return self.env.user
 
     def _default_stage(self):
         return self.env['mgmtsystem.action.stage'].search(
@@ -58,7 +58,10 @@ class MgmtsystemAction(models.Model):
         help="Gives the sequence order when displaying a list of actions."
     )
 
-    date_deadline = fields.Date('Deadline')
+    date_deadline = fields.Date(
+        'Deadline',
+        required=True,
+    )
 
     date_open = fields.Datetime(
         'Opening Date',
@@ -81,11 +84,13 @@ class MgmtsystemAction(models.Model):
     user_id = fields.Many2one(
         'res.users',
         'Responsible',
-        default=_default_owner,
+        #default=_default_owner,
         required=True,
     )
 
-    description = fields.Html('Description')
+    description = fields.Html(
+        'Description',
+        required=True,)
 
     type_action = fields.Selection(
         [
@@ -95,7 +100,11 @@ class MgmtsystemAction(models.Model):
             ('improvement', 'Improvement Opportunity')
         ], 'Response Type', required=True)
 
-    system_id = fields.Many2one('mgmtsystem.system', 'System')
+    system_id = fields.Many2one(
+        'mgmtsystem.system', 
+        'System',
+        required=True,
+    )
 
     company_id = fields.Many2one(
         'res.company',
