@@ -12,9 +12,6 @@ class MgmtsystemAction(models.Model):
     def _default_company(self):
         return self.env.user.company_id
 
-    # def _default_owner(self):
-    #     return self.env.user
-
     def _default_stage(self):
         return self.env['mgmtsystem.action.stage'].search(
             [('is_starting', '=', True)],
@@ -84,7 +81,6 @@ class MgmtsystemAction(models.Model):
     user_id = fields.Many2one(
         'res.users',
         'Responsible',
-        #default=_default_owner,
     )
 
     description = fields.Text('Description')
