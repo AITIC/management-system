@@ -201,7 +201,11 @@ class MgmtsystemNonconformity(models.Model):
             print(nc.state,)
             if nc.state  in ["analysis","pending","open","done"]:
 
-                if len(nc.partner_id) == 0  or len(nc.origin_ids) == 0 or len(nc.responsible_user_id) == 0 or len(nc.manager_user_id) == 0 or len(nc.system_id) == 0:
+                if (len(nc.partner_id) == 0
+                        or len(nc.origin_ids) == 0
+                        or len(nc.responsible_user_id) == 0
+                        or len(nc.manager_user_id) == 0
+                        or len(nc.system_id) == 0):
                     raise models.ValidationError(
                         _("you can't continue"
                             " without filling in the required fields in the draft status"))
