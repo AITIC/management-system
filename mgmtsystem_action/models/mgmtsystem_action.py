@@ -58,10 +58,7 @@ class MgmtsystemAction(models.Model):
         help="Gives the sequence order when displaying a list of actions."
     )
 
-    date_deadline = fields.Date(
-        'Deadline',
-        required=True,
-    )
+    date_deadline = fields.Date('Deadline')
 
     date_open = fields.Datetime(
         'Opening Date',
@@ -79,18 +76,18 @@ class MgmtsystemAction(models.Model):
         compute=_compute_number_of_days_to_close,
         store=True)
 
-    reference = fields.Char('Reference', required=True, readonly=True)
+    reference = fields.Char(
+        'Reference',
+        readonly=True
+    )
 
     user_id = fields.Many2one(
         'res.users',
         'Responsible',
         #default=_default_owner,
-        required=True,
     )
 
-    description = fields.Html(
-        'Description',
-        required=True,)
+    description = fields.Text('Description')
 
     type_action = fields.Selection(
         [
@@ -103,7 +100,6 @@ class MgmtsystemAction(models.Model):
     system_id = fields.Many2one(
         'mgmtsystem.system', 
         'System',
-        required=True,
     )
 
     company_id = fields.Many2one(

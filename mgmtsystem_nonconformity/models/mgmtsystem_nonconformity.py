@@ -174,6 +174,7 @@ class MgmtsystemNonconformity(models.Model):
     @api.constrains('stage_id')
     def _check_pending_with_action_ids(self):
         for nc in self:
+            print(nc.state,"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
             if nc.state == 'pending' and len(nc.action_ids) == 0:
                 raise models.ValidationError(
                     _("you can not continue without writing an action plan."))

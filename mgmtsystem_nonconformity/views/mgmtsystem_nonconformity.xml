@@ -137,7 +137,7 @@
                 <field name="responsible_user_id" attrs="{'readonly':[('state','not in',['draft','analysis'])]}"/>
                 <field name="manager_user_id" attrs="{'readonly':[('state','not in',['draft','analysis'])]}"/>
                 <field name="user_id" attrs="{'readonly':[('state','not in',['draft'])]}"/>
-                <field name="system_id" attrs="{'readonly':[('state','not in',['draft','analysis'])]}"/>
+                <field name="system_id" required="1" attrs="{'readonly':[('state','not in',['draft','analysis'])]}"/>
                 <field name="company_id" groups="base.group_multi_company"/>
               </group>
             </group>
@@ -181,7 +181,7 @@
 
               <page string="Actions" attrs="{'invisible':[('state','in',['draft','analysis','cancel'])]}">
                 <separator string="Action Plan"/>
-                <field name="action_ids" attrs="{'readonly':[('state','not in',['pending'])], 'required':[('state','in',['pending'])]}"/>
+                <field name="action_ids"  attrs="{'readonly':[('state','not in',['pending'])]}"/>
 
                 <group string="Plan Review">
                  <group>
