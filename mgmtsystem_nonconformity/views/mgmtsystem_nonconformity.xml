@@ -185,7 +185,9 @@
 
                 <group string="Plan Review">
                  <group>
-                   <field name="action_comments" attrs="{'readonly':[('state','not in',['pending'])]}" nolabel="1" placeholder="Action Plan Comments"/>
+                   <field name="action_comments" 
+                    attrs="{'readonly':[('state','not in',['pending'])],'required':[('state','in',['pending'])]}"
+                    nolabel="1" placeholder="Action Plan Comments"/>
                  </group>
                </group>
 
