@@ -171,6 +171,7 @@ class MgmtsystemNonconformity(models.Model):
                     _("Action plan  comments are required "
                       "in order to put a nonconformity In Progress."))
 
+    
     @api.constrains('stage_id')
     def _check_close_with_evaluation(self):
         for nc in self:
@@ -186,6 +187,33 @@ class MgmtsystemNonconformity(models.Model):
                     raise models.ValidationError(
                         _("All actions must be done "
                           "before closing a Nonconformity."))
+
+        
+    @api.onchange('stage_id')
+    def _onchange_stage(self):
+        for nc in self:
+            print(nc.state,)
+            if nc.state  in ["analysis","pending","open","done"]:
+
+                if (len(nc.partner_id) == 0
+                        or len(nc.origin_ids) == 0
+                        or len(nc.responsible_user_id) == 0
+                        or len(nc.manager_user_id) == 0
+                        or len(nc.system_id) == 0):
+                    raise models.ValidationError(
+                        _("you can't continue"
+                            " without filling in the required fields in the draft status"))
+                if nc.state in ["pending","open","done"]:
+                    if len(nc.severity_id) == 0:
+                        raise models.ValidationError(
+                            _("you can't continue"
+                                " without filling the required fields analysis"))
+                    if nc.state in ["open","done"]:
+                        if len(nc.action_ids) == 0:
+                            raise models.ValidationError(
+                                _("ou can't continue"
+                                    " without filling the required actions in the stock plan status"))
+
 
     @api.model
     def _elapsed_days(self, dt1_text, dt2_text):

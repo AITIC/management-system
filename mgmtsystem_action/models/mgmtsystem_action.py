@@ -12,9 +12,6 @@ class MgmtsystemAction(models.Model):
     def _default_company(self):
         return self.env.user.company_id
 
-    def _default_owner(self):
-        return self.env.user
-
     def _default_stage(self):
         return self.env['mgmtsystem.action.stage'].search(
             [('is_starting', '=', True)],
@@ -76,16 +73,17 @@ class MgmtsystemAction(models.Model):
         compute=_compute_number_of_days_to_close,
         store=True)
 
-    reference = fields.Char('Reference', required=True, readonly=True)
+    reference = fields.Char(
+        'Reference',
+        readonly=True
+    )
 
     user_id = fields.Many2one(
         'res.users',
         'Responsible',
-        default=_default_owner,
-        required=True,
     )
 
-    description = fields.Html('Description')
+    description = fields.Text('Description')
 
     type_action = fields.Selection(
         [
@@ -95,7 +93,10 @@ class MgmtsystemAction(models.Model):
             ('improvement', 'Improvement Opportunity')
         ], 'Response Type', required=True)
 
-    system_id = fields.Many2one('mgmtsystem.system', 'System')
+    system_id = fields.Many2one(
+        'mgmtsystem.system', 
+        'System',
+    )
 
     company_id = fields.Many2one(
         'res.company',
